@@ -1,42 +1,42 @@
 /**
  * @imports
  */
-import { StyleSheet} from 'react-native';
-import { IconFont } from '../../constants/NavigationIcons';
-
+import { StyleSheet } from "react-native";
+import { IconFont } from "../../constants/NavigationIcons";
 
 /**
  * @styles
  */
-export default props => StyleSheet.create({
-
+export default (props) =>
+  StyleSheet.create({
     /**
      * @maneuverView
      */
     maneuverView: {
-        padding: 15,
-        backgroundColor: props.backgroundColor ,
-        flexDirection: 'row',
-        minHeight:  120,
-        alignItems: 'center',
+      padding: 15,
+      backgroundColor: props.backgroundColor,
+      flexDirection: "row",
+      minHeight: 120,
+      alignItems: "center",
+      margin: 10,
+      borderRadius: 15,
     },
 
     maneuverViewArrow: {
-        flex: 0,
-        width: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
+      flex: 0,
+      width: 80,
+      justifyContent: "center",
+      alignItems: "center",
     },
 
     maneuverViewDirection: {
-        flex: 1,
+      flex: 1,
     },
 
     maneuverClose: {
-        flex: 0,
-        width: 30,
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
+      flex: 0,
+      width: 30,
+      justifyContent: "flex-end",
+      alignItems: "flex-end",
     },
-    
-});
+  });
