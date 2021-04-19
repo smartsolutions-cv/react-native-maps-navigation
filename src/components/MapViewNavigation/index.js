@@ -428,7 +428,7 @@ export default class MapViewNavigation extends Component {
 
         // this.props.map().animateToRegion(region, this.props.animationDuration);
         // this.props.map().animateToViewingAngle(this.props.navigationViewingAngle,this.props.animationDuration);
-        this.props.animateCamera({ center: region, pitch: this.props.navigationViewingAngle, zoom: this.props.navigationZoomLevel }, this.props.animationDuration);            
+        this.props.map().animateCamera({ center: region, pitch: this.props.navigationViewingAngle, zoom: this.props.navigationZoomLevel }, this.props.animationDuration);            
         //this.updatePosition(route.origin.coordinate);
         this.updateBearing(route.initialBearing);
 
