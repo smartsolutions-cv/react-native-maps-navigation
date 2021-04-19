@@ -241,7 +241,7 @@ export default class MapViewNavigation extends Component {
       latitude: this.state.position.latitude,
       longitude: this.state.position.longitude,
     };
-    this.updatePosition(location, bearing, duration || 0);
+    this.updatePosition(region, bearing, duration || 0);
   }
 
   /**
