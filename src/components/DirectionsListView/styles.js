@@ -47,7 +47,7 @@ export default props => StyleSheet.create({
     directionDetailTravelDuration: {
         fontSize: 32,
         fontFamily: props.fontFamily,
-        color: '#387bc1',
+        color: '#4CAF50',
     },
 
     directionDetailTravelDistance: {
@@ -77,7 +77,7 @@ export default props => StyleSheet.create({
         fontFamily: props.fontFamily,
         fontSize: 13,
         flexWrap: 'wrap',
-        color: '#387bc1',
+        color: '#4CAF50',
     },
 
     durationDistance: {
