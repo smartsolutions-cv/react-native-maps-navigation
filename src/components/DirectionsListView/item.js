@@ -72,6 +72,7 @@ export default class DirectionListViewItem extends Component {
                 </View>
                 <View style={styles.directionDetailContent}>
                     <ManeuverLabel
+                    fontColor={'#000000'}
                         {...this.props}
                     />
                     <DurationDistanceLabel
