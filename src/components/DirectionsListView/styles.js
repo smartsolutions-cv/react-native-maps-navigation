@@ -16,7 +16,7 @@ export default props => StyleSheet.create({
     directionDetailHeader: {
         padding: 25,
         paddingBottom: 10,
-        backgroundColor: '#f7f7f4',
+        backgroundColor: '#D3D3D3',
         flexDirection: 'column'
     },
 
