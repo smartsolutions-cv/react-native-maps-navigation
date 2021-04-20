@@ -473,7 +473,7 @@ export default class MapViewNavigation extends Component {
             .animateToRegion(region, this.props.animationDuration);
           this.props
             .map()
-            .animateToViewingAngle(
+            .animateCamera(
               this.props.navigationViewingAngle,
               this.props.animationDuration
             );
