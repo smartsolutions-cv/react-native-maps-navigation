@@ -445,7 +445,7 @@ export default class MapViewNavigation extends Component {
   navigateRoute(origin, destination, options = false) {
     return this.prepareRoute(origin, destination, options, true).then(
       (route) => {
-        const region = {};
+        let region = {};
         if (Platform.OS === "ios") {
           region = {
             ...route.origin.coordinate,
