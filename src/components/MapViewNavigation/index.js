@@ -479,7 +479,7 @@ export default class MapViewNavigation extends Component {
             },
             this.props.animationDuration
           );
-          this.updatePositionIOS(route.origin.coordinate);
+          // this.updatePositionIOS(route.origin.coordinate);
         } else {
           this.props.map().animateCamera(
             {
