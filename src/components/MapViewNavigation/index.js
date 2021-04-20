@@ -243,7 +243,16 @@ export default class MapViewNavigation extends Component {
    * @param duration
    */
   updatePositionIOS(coordinate, duration = 0) {
-    this.props.map().animateToCoordinate(coordinate, duration);
+    // this.props.map().animateToCoordinate(coordinate, duration);
+    this.props.map().animateCamera(
+      {
+        center: coordinate,
+        heading: 0,
+        zoom: this.props.navigationZoomLevel,
+        pitch: 90,
+      },
+      duration
+    );
   }
 
   /**
