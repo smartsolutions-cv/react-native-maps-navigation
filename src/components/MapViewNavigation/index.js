@@ -4,7 +4,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { CoordinatePropType } from "../../constants/PropTypes";
-import { View, TouchableOpacity, Text, Dimensions } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Dimensions,
+  Platform,
+} from "react-native";
 import geolocation from "@react-native-community/geolocation";
 import connectTheme from "../../themes";
 import Geocoder from "../../modules/Geocoder";
@@ -232,6 +238,15 @@ export default class MapViewNavigation extends Component {
   }
 
   /**
+   * updatePosition
+   * @param coordinate
+   * @param duration
+   */
+  updatePositionIOS(coordinate, duration = 0) {
+    this.props.map().animateToCoordinate(coordinate, duration);
+  }
+
+  /**
    * updateBearing
    * @param bearing
    * @param duration
@@ -242,6 +257,12 @@ export default class MapViewNavigation extends Component {
       longitude: this.state.position.longitude,
     };
     this.updatePosition(region, bearing, duration || 0);
+  }
+
+  updateBearingIOS(bearing, duration = false) {
+    this.props
+      .map()
+      .animateToBearing(bearing, duration || this.props.animationDuration);
   }
 
   /**
@@ -298,7 +319,12 @@ export default class MapViewNavigation extends Component {
 
     // update position on map
     if (this.state.navigationMode == NavigationModes.NAVIGATION) {
-      this.updatePosition(position, heading);
+      if (Platform.OS === "ios") {
+        this.updatePosition(position);
+        this.updateBearing(heading);
+      } else {
+        this.updatePosition(position, heading);
+      }
     }
 
     this.setState({ position });
@@ -419,18 +445,42 @@ export default class MapViewNavigation extends Component {
   navigateRoute(origin, destination, options = false) {
     return this.prepareRoute(origin, destination, options, true).then(
       (route) => {
-        const region = {
-          // ...route.origin.coordinate,
-          // ...this.getZoomValue(this.props.navigationZoomLevel),
-          latitude: parseFloat(route.origin.coordinate.latitude),
-          longitude: parseFloat(route.origin.coordinate.latitude),
-        };
+        const region = {};
+        if (Platform.OS === "ios") {
+          region = {
+            ...route.origin.coordinate,
+            ...this.getZoomValue(this.props.navigationZoomLevel),
+          };
+        } else {
+          region = {
+            latitude: parseFloat(route.origin.coordinate.latitude),
+            longitude: parseFloat(route.origin.coordinate.latitude),
+          };
+        }
 
-        // this.props.map().animateToRegion(region, this.props.animationDuration);
-        // this.props.map().animateToViewingAngle(this.props.navigationViewingAngle,this.props.animationDuration);
-        this.props.map().animateCamera({ center: region, pitch: this.props.navigationViewingAngle, zoom: this.props.navigationZoomLevel }, this.props.animationDuration);            
-        //this.updatePosition(route.origin.coordinate);
+        if (Platform.OS === "ios") {
+          this.props
+            .map()
+            .animateToRegion(region, this.props.animationDuration);
+          this.props
+            .map()
+            .animateToViewingAngle(
+              this.props.navigationViewingAngle,
+              this.props.animationDuration
+            );
+          this.updatePositionIOS(route.origin.coordinate);
+        } else {
+          this.props.map().animateCamera(
+            {
+              center: region,
+              pitch: this.props.navigationViewingAngle,
+              zoom: this.props.navigationZoomLevel,
+            },
+            this.props.animationDuration
+          );
         this.updateBearing(route.initialBearing);
+      }
+
 
         this.setState({
           navigationMode: NavigationModes.NAVIGATION,
