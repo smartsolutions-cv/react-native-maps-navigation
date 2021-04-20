@@ -219,7 +219,7 @@ export default class MapViewNavigation extends Component {
    * @param heading
    * @param duration
    */
-  updatePosition(coordinate, heading, duration = 0) {
+  updatePosition(coordinate, heading = 0, duration = 0) {
     this.props.map().animateCamera(
       {
         center: coordinate,
