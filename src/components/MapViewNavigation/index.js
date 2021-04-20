@@ -471,12 +471,14 @@ export default class MapViewNavigation extends Component {
           this.props
             .map()
             .animateToRegion(region, this.props.animationDuration);
-          this.props
-            .map()
-            .animateCamera(
-              this.props.navigationViewingAngle,
-              this.props.animationDuration
-            );
+          this.props.map().animateCamera(
+            {
+              center: region,
+              pitch: this.props.navigationViewingAngle,
+              zoom: this.props.navigationZoomLevel,
+            },
+            this.props.animationDuration
+          );
           this.updatePositionIOS(route.origin.coordinate);
         } else {
           this.props.map().animateCamera(
@@ -487,9 +489,8 @@ export default class MapViewNavigation extends Component {
             },
             this.props.animationDuration
           );
-        this.updateBearing(route.initialBearing);
-      }
-
+          this.updateBearing(route.initialBearing);
+        }
 
         this.setState({
           navigationMode: NavigationModes.NAVIGATION,
