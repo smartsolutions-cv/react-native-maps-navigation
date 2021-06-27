@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^3.6.3",
+    "@react-native-community/geolocation": "^2.0.2",
     "geolib": "^3.0.2",
     "prop-types": "^15.6.2",
     "react-native-optiongroup": "^0.0.7"
