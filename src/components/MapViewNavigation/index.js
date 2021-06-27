@@ -122,8 +122,8 @@ export default class MapViewNavigation extends Component {
       route: false,
       markers: [],
       position: {},
-      navigationMode: NavigationModes.IDLE,
-      travelMode: TravelModes.DRIVING,
+      navigationMode: props.navigationMode || NavigationModes.IDLE,
+      travelMode: props.travelMode || TravelModes.DRIVING,
       stepIndex: false,
     };
 
