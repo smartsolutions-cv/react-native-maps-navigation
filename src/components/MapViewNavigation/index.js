@@ -25,6 +25,7 @@ import RoutePolyline from "../RoutePolyline";
 import PositionMarker from "../PositionMarker";
 import { POSITION_ARROW } from "../../constants/MarkerTypes";
 import { Circle, Polygon, Polyline } from "react-native-maps";
+import CompassHeading from 'react-native-compass-heading';
 
 /**
  * @component
@@ -142,6 +143,13 @@ export default class MapViewNavigation extends Component {
     this.watchId = geolocation.watchPosition((position) => {
       this.setPosition(position.coords);
     });
+    
+    const degreeUpdateRate = 3;
+    CompassHeading.start(degreeUpdateRate, ({heading}) => {
+      if (this.state.navigationMode == NavigationModes.NAVIGATION && this.state.position.latitude && this.state.position.longitude) {
+        this.updateBearing(heading);
+      }
+    });
   }
 
   /**
@@ -149,6 +157,7 @@ export default class MapViewNavigation extends Component {
    */
   componentWillUnmount() {
     geolocation.clearWatch(this.watchId);
+    CompassHeading.stop();
   }
 
   /**
