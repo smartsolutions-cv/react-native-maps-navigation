@@ -44,6 +44,7 @@
     "@react-native-community/geolocation": "^2.0.2",
     "geolib": "^3.0.2",
     "prop-types": "^15.6.2",
+    "react-native-compass-heading": "^1.2.1",
     "react-native-optiongroup": "^0.0.7"
   },
   "rnpm": {
