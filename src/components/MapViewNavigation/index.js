@@ -143,9 +143,9 @@ export default class MapViewNavigation extends Component {
     this.watchId = geolocation.watchPosition((position) => {
       this.setPosition(position.coords);
     });
-    
+
     const degreeUpdateRate = 3;
-    CompassHeading.start(degreeUpdateRate, ({heading}) => {
+    CompassHeading.start(degreeUpdateRate, ({ heading }) => {
       if (this.state.navigationMode == NavigationModes.NAVIGATION && this.state.position.latitude && this.state.position.longitude) {
         this.updateBearing(heading);
       }
@@ -170,8 +170,10 @@ export default class MapViewNavigation extends Component {
       if (
         prevProps.navigationMode != this.props.navigationMode ||
         prevProps.travelMode != this.props.travelMode ||
-        prevProps.origin != this.props.origin ||
-        prevProps.destination != this.props.destination
+        prevProps.origin.latitude != this.props.origin.latitude ||
+        prevProps.origin.longitude != this.props.origin.longitude ||
+        prevProps.destination.latitude != this.props.destination.latitude ||
+        prevProps.destination.longitude != this.props.destination.longitude
       ) {
         this.updateRoute();
       }
@@ -270,6 +272,10 @@ export default class MapViewNavigation extends Component {
    * @param duration
    */
   updateBearing(bearing, duration = false) {
+    if (!this.state.position.latitude || !this.state.position.longitude) {
+      return;
+    }
+
     const region = {
       latitude: this.state.position.latitude,
       longitude: this.state.position.longitude,
@@ -472,7 +478,7 @@ export default class MapViewNavigation extends Component {
         } else {
           region = {
             latitude: parseFloat(route.origin.coordinate.latitude),
-            longitude: parseFloat(route.origin.coordinate.latitude),
+            longitude: parseFloat(route.origin.coordinate.longitude),
           };
         }
 
