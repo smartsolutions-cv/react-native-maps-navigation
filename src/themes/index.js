@@ -35,8 +35,8 @@ export const defaultThemeSettings = {
 
         [MarkerTypes.POSITION_ARROW]: {
             icon: NavigationIcons.navigate,
-            size: 100,
-            fontSize: 80,
+            size: 70,
+            fontSize: 50,
             color: '#ffffff',
             backgroundColor: '#387bc1'
         },
