@@ -67,6 +67,7 @@ export default class MapViewNavigation extends Component {
     routeStepCenterTolerance: PropTypes.number,
     routeStepCourseTolerance: PropTypes.number,
     displayDebugMarkers: PropTypes.bool,
+    trackPosition: PropTypes.bool,
     simulate: PropTypes.bool,
     options: PropTypes.object,
   };
@@ -98,6 +99,7 @@ export default class MapViewNavigation extends Component {
     routeStepCenterTolerance: 0.1,
     routeStepCourseTolerance: 30, // in degress
     displayDebugMarkers: false,
+    trackPosition: true,
     simulate: false,
     options: {},
   };
@@ -139,10 +141,11 @@ export default class MapViewNavigation extends Component {
    * @componentDidMount
    */
   componentDidMount() {
-    // this.watchId = navigator.geolocation.watchPosition((position) => {
-    this.watchId = geolocation.watchPosition((position) => {
-      this.setPosition(position.coords);
-    });
+    if (this.props.trackPosition) {
+      this.watchId = geolocation.watchPosition((position) => {
+        this.setPosition(position.coords);
+      }, { enableHighAccuracy: true, distanceFilter: 0 });
+    }
 
     const degreeUpdateRate = 3;
     CompassHeading.start(degreeUpdateRate, ({ heading }) => {
@@ -156,7 +159,10 @@ export default class MapViewNavigation extends Component {
    * @componentWillUnmount
    */
   componentWillUnmount() {
-    geolocation.clearWatch(this.watchId);
+    if (this.watchId !== undefined) {
+      geolocation.clearWatch(this.watchId);
+    }
+    
     CompassHeading.stop();
   }
 
