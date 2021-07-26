@@ -70,6 +70,7 @@ export default class MapViewNavigation extends Component {
     trackPosition: PropTypes.bool,
     simulate: PropTypes.bool,
     options: PropTypes.object,
+
   };
 
   /**
@@ -162,7 +163,7 @@ export default class MapViewNavigation extends Component {
     if (this.watchId !== undefined) {
       geolocation.clearWatch(this.watchId);
     }
-    
+
     CompassHeading.stop();
   }
 
@@ -242,7 +243,7 @@ export default class MapViewNavigation extends Component {
    * @param heading
    * @param duration
    */
-  updatePosition(coordinate, heading = 0, duration = 0) {
+  updatePosition(coordinate, heading = undefined, duration = 0) {
     this.props.map().animateCamera(
       {
         center: coordinate,
@@ -278,7 +279,7 @@ export default class MapViewNavigation extends Component {
    * @param duration
    */
   updateBearing(bearing, duration = false) {
-    if (!this.state.position.latitude || !this.state.position.longitude) {
+    if (bearing === undefined || !this.state.position.latitude || !this.state.position.longitude) {
       return;
     }
 
@@ -339,10 +340,12 @@ export default class MapViewNavigation extends Component {
    * setPosition
    * @param position
    */
-  setPosition(position) {
-    const { latitude, longitude, heading } = position;
+  setPosition({ latitude, longitude, heading }) {
 
-    position.coordinate = { latitude, longitude };
+    const position = {
+      latitude, longitude, heading,
+      coordinate: { latitude, longitude }
+    };
 
     // process traps on setPosition
     this.traps.execute(position);
