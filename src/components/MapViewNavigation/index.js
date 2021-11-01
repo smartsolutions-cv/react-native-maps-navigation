@@ -301,6 +301,10 @@ export default class MapViewNavigation extends Component {
    * @param stepIndex
    */
   updateStep(stepIndex = 0) {
+    if (!this.state.route) {
+      return;
+    }
+
     const step = this.state.route.steps[stepIndex < 0 ? 0 : stepIndex];
 
     const nextStep = this.state.route.steps[stepIndex + 1];
@@ -520,7 +524,7 @@ export default class MapViewNavigation extends Component {
           navigationMode: NavigationModes.NAVIGATION,
         });
 
-        this.updateStep(0);
+        // this.updateStep(0);
 
         this.props.onNavigationStarted && this.props.onNavigationStarted();
 
@@ -528,7 +532,7 @@ export default class MapViewNavigation extends Component {
           console.log("SIMULATING ROUTE");
           this.simulator = new Simulator(this);
           setTimeout(
-            () => this.simulator.start(route),
+            () => this.simulator && this.simulator.start(route),
             this.props.animationDuration * 1.5
           );
         } else {
@@ -603,6 +607,10 @@ export default class MapViewNavigation extends Component {
     let c = 0;
 
     steps.forEach((step, index) => {
+      if (!step) {
+        return;
+      }
+
       const coordinate = step.start;
 
       [
